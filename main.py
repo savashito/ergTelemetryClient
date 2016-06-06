@@ -1,3 +1,5 @@
+import sys
+sys.path.append("../PyRow")
 import pyrow
 
 ergs = pyrow.find()
