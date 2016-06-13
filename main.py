@@ -3,8 +3,13 @@ import time
 from socketIO_client import SocketIO, LoggingNamespace
 sys.path.append("../PyRow")
 import pyrow
-
-addr = '54.153.114.110'# '192.168.0.3'
+addr = ''
+if(len(sys.argv)>1 and sys.argv[1]=='local'):
+    addr = 'localhost'
+else:
+    addr = '54.153.114.110'# '192.168.0.3'
+print sys.argv
+print "Connecting to "+addr
 ergs = pyrow.find()
 ergs = list(ergs)
 number_ergs = len(ergs)
