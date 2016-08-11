@@ -4,7 +4,7 @@ from socketIO_client import SocketIO, LoggingNamespace
 sys.path.append("../PyRow")
 import pyrow
 addr = ''
-port = 80
+port = 8080
 pyid = 69
 
 def emit (data):
@@ -14,7 +14,7 @@ def emit (data):
 if(len(sys.argv)>1 and sys.argv[1]=='local'):
 	addr = 'localhost'
 else:
-	addr = '54.153.114.110'# '192.168.0.3'
+	addr = 'jupitar.org'#'54.153.114.110'# '192.168.0.3'
 print sys.argv
 print "Connecting to "+addr
 ergs = pyrow.find()
