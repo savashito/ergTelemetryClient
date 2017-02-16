@@ -1,6 +1,7 @@
 import sys
 import time
 from socketIO_client import SocketIO, LoggingNamespace
+# var socket = require('./socketController');
 
 addr = 'localhost'
 port = 8080
@@ -11,9 +12,11 @@ totalDistance = 0
 
 def emit (data):
 	# data['pyid'] = pyid
+	# socket.emit('ergData',data);
 	socketIO.emit('ergData',data)
 with SocketIO(addr, port, LoggingNamespace) as socketIO:
 	while 1:
+
 		data = {'cid':'2','status': 9, 'distance': '11.2', 'heartrate': 0, 'power': int(6), 'calhr': 320.6496, 'calories': int(0),'forceplot': [], 'pace': 387.8277952417603, 'spm': 51, 'time': 9.29}
 		data['distance'] = totalDistance
 		data['time'] = totalTime
