@@ -34,7 +34,8 @@ while(1):
 	try:
 		data = m.get_monitor(forceplot=True)
 		data['cid'] = ergInfo['cid']
-		print data
+		print data.forceplot
+		print len(data.forceplot)
 		socketIO.emit('ergData',data)
 		time.sleep(deltaTime)
 	except:
