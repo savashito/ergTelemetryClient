@@ -30,16 +30,41 @@ erg = searchErgs()[0]
 m = pyrow.pyrow(erg)
 # print m.get_status()
 ergInfo = m.get_erg()
+num_zeros = 0
+num_ones = 0
+prev_time = 0
+
 while(1):
 	try:
 		data = m.get_monitor(forceplot=True)
 		data['cid'] = ergInfo['cid']
-		print data.forceplot
-		print len(data.forceplot)
+		# print data
+		#print data['forceplot']
+		
+		if(0==len(data['forceplot'])):
+			num_zeros +=1
+			if(num_ones>3):
+				print "endedstarted "+str(prev_time)+" " +str(data['time'])
+				data['driveTime']=data['time']-prev_time 
+				prev_time = data['time']
+				socketIO.emit('strokeData',data)
+			num_ones=0
+
+		else:
+			num_ones +=1
+			#print num_zeros
+			if(num_zeros>3):
+				
+				print "rowe started "+str(prev_time)+" " +str(data['time'])
+				data['strokeRecoveryTime']=data['time']-prev_time 
+				prev_time = data['time']
+				socketIO.emit('strokeData',data)
+			num_zeros = 0
 		socketIO.emit('ergData',data)
-		time.sleep(deltaTime)
-	except:
+		time.sleep(0.01)
+	except IOError as e:
 		time.sleep(1)
+		print e
 		print "Search for ergs again"
 		erg = searchErgs()[0]
 		m = pyrow.pyrow(erg)
