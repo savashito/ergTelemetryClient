@@ -38,7 +38,7 @@ while(1):
 	try:
 		data = m.get_monitor(forceplot=True)
 		data['cid'] = ergInfo['cid']
-		# print data
+		print data
 		#print data['forceplot']
 		
 		if(0==len(data['forceplot'])):
