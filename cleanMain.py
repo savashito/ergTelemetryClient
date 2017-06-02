@@ -20,11 +20,12 @@ def searchErgs():
 	number_ergs=0
 	ergs = []
 	while(number_ergs==0):
+		print ("Searching for ergs")
 		ergs = pyrow.find()
 		ergs = list(ergs)
 		number_ergs = len(ergs)
 		print "Ergs connected:" + str(number_ergs)
-		print ("Searching for ergs")
+		
 		time.sleep(deltaTime)
 
 	return ergs
@@ -45,7 +46,9 @@ def USBErgService (  ):
 	prev_time = [0,0,0,0]
 	m = [0,0,0,0]
 	ergs = searchErgs()
-	n_ergs = 0
+	n_ergs = len(ergs)
+	for i in range(len(ergs)):
+		m[i] = pyrow.pyrow(ergs[i])	
 	while(running):
 		ergs = pyrow.find()
 		ergs = list(ergs)
@@ -95,11 +98,11 @@ def USBErgService (  ):
 					num_zeros[i] = 0
 	#			print data
 				socketIO.emit('ergData',data)
-			ergs = pyrow.find()
+			# ergs = pyrow.find()
 			# print len(list(ergys))
 			# ergs = list(ergs)
 			# number_ergs = len(ergs)
-				# time.sleep(0.01)
+			time.sleep(0.01)
 				# ergs = searchErgs()
 		
 		except IOError as e:
