@@ -102,7 +102,7 @@ def USBErgService (  ):
 				# time.sleep(0.01)
 				# ergs = searchErgs()
 		
-		except IOError as e:
+		except Exception as e:
 			running=False;
 			n_ergs = 0
 			# time.sleep(1)
@@ -116,11 +116,11 @@ def USBErgService (  ):
 			# ergInfo = m.get_erg()
 USBErgServiceT = threading.Thread(name='daemon', target=USBErgService)
 # while(1):
+#USBErgServiceT.start()
+#USBErgServiceT.join()
 USBErgServiceT.start()
 USBErgServiceT.join()
-USBErgServiceT.start()
-USBErgServiceT.join()
-USBErgServiceT.start()
-USBErgServiceT.join()
+#USBErgServiceT.start()
+#USBErgServiceT.join()
 
 
