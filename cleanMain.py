@@ -74,7 +74,7 @@ def USBErgService (  ):
 				data = m[i].get_monitor(forceplot=True)
 				data['cid'] = ergInfo['cid']
 				data['i'] = i
-			#	print data
+				print data
 				#print data['forceplot']
 			
 				if(0==len(data['forceplot'])):
