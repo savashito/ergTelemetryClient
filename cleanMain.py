@@ -38,13 +38,13 @@ def searchErgs():
 
 import threading
 
-
+m = [0,0,0,0]
 def USBErgService (  ):
 	running = True;
 	num_zeros = [0,0,0,0]
 	num_ones = [0,0,0,0]
 	prev_time = [0,0,0,0]
-	m = [0,0,0,0]
+	
 	ergs = searchErgs()
 	n_ergs = len(ergs)
 	for i in range(len(ergs)):
@@ -122,13 +122,14 @@ USBErgServiceT = threading.Thread(name='daemon', target=USBErgService)
 USBErgServiceT.start()
 USBErgServiceT.join()
 time.sleep(1)
+pyrow.release(m);
 USBErgServiceT = threading.Thread(name='daemon', target=USBErgService)
 USBErgServiceT.start()
 USBErgServiceT.join()
 
-time.sleep(1)
-USBErgServiceT = threading.Thread(name='daemon', target=USBErgService)
-USBErgServiceT.start()
-USBErgServiceT.join()
+#time.sleep(1)
+#USBErgServiceT = threading.Thread(name='daemon', target=USBErgService)
+#USBErgServiceT.start()
+#USBErgServiceT.join()
 
 
