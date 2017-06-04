@@ -117,13 +117,18 @@ def USBErgService (  ):
 			# m = pyrow.pyrow(erg)
 			# print m.get_status()
 			# ergInfo = m.get_erg()
-USBErgServiceT = threading.Thread(name='daemon', target=USBErgService)
 # while(1):
-#USBErgServiceT.start()
-#USBErgServiceT.join()
+USBErgServiceT = threading.Thread(name='daemon', target=USBErgService)
 USBErgServiceT.start()
 USBErgServiceT.join()
-#USBErgServiceT.start()
-#USBErgServiceT.join()
+time.sleep(1)
+USBErgServiceT = threading.Thread(name='daemon', target=USBErgService)
+USBErgServiceT.start()
+USBErgServiceT.join()
+
+time.sleep(1)
+USBErgServiceT = threading.Thread(name='daemon', target=USBErgService)
+USBErgServiceT.start()
+USBErgServiceT.join()
 
 
