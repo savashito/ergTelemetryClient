@@ -4,11 +4,12 @@ import time
 # sys.path.append("../PyRow")
 # import pyrow
 # Opens socket connection to communicate between Erg Telemetry and NODE
-addr = 'localhost'
+addr = '127.0.0.1'
+# addr = 'localhost'
 port = 8080
+print ("listen to coonectios")
 socketIO = SocketIO(addr, port, LoggingNamespace)
-
-# print ("Meow")
+print ("Meow")
 # Send dummy data
 # data = {'time':'','distance':'','driveLength': 1.24,'driveTime': 0.6,'strokeRecoveryTime': 1.42,'strokeRecoveryDistance': 9.86,'peakDriveForce': 181.70000000000002,'avgDriveForce': 102,'strokePower': 241,'strokeCalories': 1129,'strokeCount': 39}
 # socketIO.emit('strokeData',data)
@@ -22,6 +23,7 @@ while 1:
 	mTime = mTime +0.5
 	data = {'cid':'2','status': 9, 'distance': distance, 'heartrate': 0,'i':0, 'power': int(6), 'calhr': 320.6496, 'calories': int(0),'forceplot': [], 'pace': 87.8277952417603, 'spm': 22, 'time': mTime}
 	socketIO.emit('ergData',data)
+	print data
 	data = {'cid':'2','status': 9, 'distance': distance2, 'heartrate': 0,'i':1, 'power': int(6), 'calhr': 320.6496, 'calories': int(0),'forceplot': [], 'pace': 87.8277952417603, 'spm': 22, 'time': mTime}
 	socketIO.emit('ergData',data)
 	print data
