@@ -6,6 +6,7 @@ import pyrow
 # Opens socket connection to communicate between Erg Telemetry and NODE
 addr = 'localhost'
 port = 8080
+print ("Waiting for incomming connections")
 socketIO = SocketIO(addr, port, LoggingNamespace)
 
 # print ("Meow")

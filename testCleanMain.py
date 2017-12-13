@@ -13,28 +13,37 @@ print ("Meow")
 # Send dummy data
 # data = {'time':'','distance':'','driveLength': 1.24,'driveTime': 0.6,'strokeRecoveryTime': 1.42,'strokeRecoveryDistance': 9.86,'peakDriveForce': 181.70000000000002,'avgDriveForce': 102,'strokePower': 241,'strokeCalories': 1129,'strokeCount': 39}
 # socketIO.emit('strokeData',data)
-
+import random
 distance = 0
+distance1 = 0
 distance2 = 0
+
 mTime = 0
+dx = 0
 while 1:
-	distance = distance 
-	distance1 = distance2 +1
-	distance2 = distance2 +0.9
+	distance = distance + 1
+	distance1 = distance1 +1
+	distance2 = distance2 +1
 	mTime = mTime +0.5
-	data = {'time':'','distance':'','driveLength': 1.24,'driveTime': 0,'i':0,'strokeRecoveryTime': 0,'strokeRecoveryDistance': 9.86,'peakDriveForce': 181.70000000000002,'avgDriveForce': 102,'strokePower': 241,'strokeCalories': 1129,'strokeCount': 39}
-	socketIO.emit('strokeData',data)
-	data = {'time':'','distance':'','driveLength': 1.24,'driveTime': 0,'i':1,'strokeRecoveryTime': 0,'strokeRecoveryDistance': 9.86,'peakDriveForce': 181.70000000000002,'avgDriveForce': 102,'strokePower': 241,'strokeCalories': 1129,'strokeCount': 39}
-	socketIO.emit('strokeData',data)
-	data = {'cid':'2','status': 9, 'distance': distance, 'heartrate': 0,'i':0, 'power': int(6), 'calhr': 320.6496, 'calories': int(0),'forceplot': [], 'pace': 87.8277952417603, 'spm': 18, 'time': mTime}
+	# data = {'time':'','distance':'','driveLength': 1.24,'driveTime': 0,'i':0,'strokeRecoveryTime': 0,'strokeRecoveryDistance': 9.86,'peakDriveForce': 181.70000000000002,'avgDriveForce': 102,'strokePower': 241,'strokeCalories': 1129,'strokeCount': 39}
+	# socketIO.emit('strokeData',data)
+	# data = {'time':'','distance':'','driveLength': 1.24,'driveTime': 0,'i':1,'strokeRecoveryTime': 0,'strokeRecoveryDistance': 9.86,'peakDriveForce': 181.70000000000002,'avgDriveForce': 102,'strokePower': 241,'strokeCalories': 1129,'strokeCount': 39}
+	# socketIO.emit('strokeData',data)
+	####
+	if(distance%4==0):
+		k = 3
+		dx = int(random.random()*k)-k/2.0
+	# else:
+		# dx = 0
+	data = {'cid':'2','status': 9, 'distance': distance, 'heartrate': 0,'i':0, 'power': int(6), 'calhr': 320.6496, 'calories': int(0),'forceplot': [], 'pace': 107.8277952417603+dx, 'spm': 35, 'time': mTime}
 	socketIO.emit('ergData',data)
 	print data
-	data = {'cid':'2','status': 9, 'distance': distance1, 'heartrate': 0,'i':2, 'power': int(6), 'calhr': 320.6496, 'calories': int(0),'forceplot': [], 'pace': 87.8277952417603, 'spm': 21, 'time': mTime}
+	data = {'cid':'2','status': 9, 'distance': distance1+30.0, 'heartrate': 0,'i':1, 'power': int(6), 'calhr': 320.6496, 'calories': int(0),'forceplot': [], 'pace': 107.8277952417603+dx, 'spm': 41, 'time': mTime}
 	socketIO.emit('ergData',data)
-	print data
-	data = {'cid':'2','status': 9, 'distance': distance2, 'heartrate': 0,'i':1, 'power': int(6), 'calhr': 320.6496, 'calories': int(0),'forceplot': [], 'pace': 87.8277952417603, 'spm': 22, 'time': mTime}
+	# print data
+	data = {'cid':'2','status': 9, 'distance': distance2+15.0, 'heartrate': 0,'i':2, 'power': int(6), 'calhr': 320.6496, 'calories': int(0),'forceplot': [], 'pace': 87.8277952417603, 'spm': 22, 'time': mTime}
 	socketIO.emit('ergData',data)
-	print data
+	# print data
 	time.sleep(0.5)
 
 
