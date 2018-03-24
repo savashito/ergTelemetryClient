@@ -1,0 +1,60 @@
+To install
+
+ErgTelemetry:
+git clone https://github.com/savashito/ergTelemetryClient.git
+
+-------
+PM5BlenoEmulator:
+git clone https://github.com/savashito/InteroPM5Emulator.git
+------
+Startupscripts:
+vi /etc/rc.local 
+	---> /etc/init.d/startintero
+
+vi /etc/init.d/startintero
+	---> # cd /home/pi/ergTelemetryClient
+	---> # sudo python cleanMain.py &
+	---> cd /home/pi/InteroPM5Emulator/
+	---> sudo node main.js &
+
+-------
+Service:
+http://www.diegoacuna.me/how-to-run-a-script-as-a-service-in-raspberry-pi-raspbian-jessie/
+
+vi /lib/systemd/system/erg.service
+cd /lib/systemd/system/
+chmod 644 erg.service 
+sudo systemctl enable erg.service 
+sudo systemctl daemon-reload
+sudo systemctl start erg.service 
+--------
+to log:
+sudo systemctl status erg.service
+strace -p1234 -s9999 -e write
+
+-------
+erg.service file
+[Unit]
+Description=Service to read the ergs
+After=multi-user.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/ergTelemetryClient/
+ExecStart=/usr/bin/python /home/pi/ergTelemetryClient/cleanMain.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+--------
+Install rmate
+https://gist.github.com/tomdaley92/dd47cc1c26c58b2d2e5cf6ec56a2c4c7
+
+sudo wget -O /usr/local/bin/rsub \https://raw.github.com/aurora/rmate/master/rmate
+sudo chmod a+rx /usr/local/bin/rsub
+
+Host *
+  RemoteForward 52698 127.0.0.1:52698
+  UseKeyChain no
+
+
