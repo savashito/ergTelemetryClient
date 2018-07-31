@@ -42,7 +42,10 @@ while 1:
 	# 	'forceplot': [], 
 	# 	'pace': 107.8277952417603+dx, 
 	# 	'spm': 35, 'time': mTime}
+	# distance = 69
+	# mTime = 99
 	ergData = 	{'i':0,'time':mTime, 'distance':distance, 'flags':0, 'totalWOGDistance':0, 'totalWOGTime':0, 'WOGTimeType':0, 'drag':122, 'speed':2, 'SPM':3, 'heartrate':4, 'pace':107.8277952417603+dx, 'avgPace':107.8277952417603, 'restDistance':7, 'restTime':8,'intervalCount':9,'avgPower':10, 'calories':11, 'splitAvgPace':12, 'splitAvgPower':13, 'splitAvgCalories':14, 'splitTime':15, 'splitDistance':16}
+	print ergData
 	socketIO.emit('ergData',ergData)
 	# socketIO.emit('ergData',data)
 	# print data
@@ -52,12 +55,18 @@ while 1:
 	# data = {'cid':'2','status': 9, 'distance': distance2+15.0, 'heartrate': 0,'i':2, 'power': int(6), 'calhr': 320.6496, 'calories': int(0),'forceplot': [], 'pace': 87.8277952417603, 'spm': 22, 'time': mTime}
 	# socketIO.emit('ergData',data)
 	# print data
+	
+
+
+
 	time.sleep(0.4)
-	strokeData = {'time':23}
+	distance = distance + 0.10132
+	# strokeData = {'time':23}
 	strokeData = 	{'i':0,'time':mTime, 'distance':distance, 'driveLength':3, 'driveTime':4, 'strokeRecoveryTime':mTime-prev_time, 'strokeRecoveryDistance':6, 'peakDriveForce':7, 'avgDriveForce':8, 'workPerStroke':8, 'strokeCount':10, 'strokePower':11, 'strokeCalories':12, 'projectedWorkTime':13, 'projectedWorkDistance':14}
 	
 	prev_time = strokeData['time']
-	socketIO.emit('strokeData',strokeData)
+	print strokeData
+	# socketIO.emit('strokeData',strokeData)
 	time.sleep(0.1)
 
   # ergData = 	{'i':0,'time':0,'speed':0, 'SPM':0, 'heartrate':0, 'pace':0, 'avgPace':0, 'restDistance':0, 'restTime':0,'intervalCount':0,'avgPower':0, 'calories':0, 'splitAvgPace':0, 'splitAvgPower':0, 'splitAvgCalories':0, 'splitTime':0, 'splitDistance':0}
