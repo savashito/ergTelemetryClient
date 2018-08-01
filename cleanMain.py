@@ -7,15 +7,15 @@ import pyrow
 addr = 'localhost'
 port = 8080
 print ("Waiting for incomming connections")
-socketIO = SocketIO(addr, port, LoggingNamespace)
+
 
 # print ("Meow")
 # Send dummy data
-data = {'time':'','distance':'','driveLength': 1.24,'driveTime': 0.6,'strokeRecoveryTime': 1.42,'strokeRecoveryDistance': 9.86,'peakDriveForce': 181.70000000000002,'avgDriveForce': 102,'strokePower': 241,'strokeCalories': 1129,'strokeCount': 39}
-socketIO.emit('strokeData',data)
-data = {'cid':'2','status': 9, 'distance': '11.2', 'heartrate': 0, 'power': int(6), 'calhr': 320.6496, 'calories': int(0),'forceplot': [], 'pace': 87.8277952417603, 'spm': 51, 'time': 9.29}
-socketIO.emit('ergData',data)
-deltaTime = 0.01
+# data = {'time':'','distance':'','driveLength': 1.24,'driveTime': 0.6,'strokeRecoveryTime': 1.42,'strokeRecoveryDistance': 9.86,'peakDriveForce': 181.70000000000002,'avgDriveForce': 102,'strokePower': 241,'strokeCalories': 1129,'strokeCount': 39}
+# socketIO.emit('strokeData',data)
+# data = {'cid':'2','status': 9, 'distance': '11.2', 'heartrate': 0, 'power': int(6), 'calhr': 320.6496, 'calories': int(0),'forceplot': [], 'pace': 87.8277952417603, 'spm': 51, 'time': 9.29}
+# socketIO.emit('ergData',data)
+# deltaTime = 0.01
 # def searchNewErgs()
 def searchErgs():
 	number_ergs=0
@@ -27,24 +27,31 @@ def searchErgs():
 		number_ergs = len(ergs)
 		print "Ergs connected:" + str(number_ergs)
 		
-		time.sleep(deltaTime)
+		# time.sleep(deltaTime)
 
 	return ergs
+
+####
 # erg = searchErgs()[0]
 # m = pyrow.pyrow(erg)
-# # print m.get_status()
-# ergInfo = m.get_erg()
+# print m.get_monitor(forceplot=True)
+# # ergInfo = m.get_erg()
+# # print ergInfo
+# exit()	
+#######
+
+socketIO = SocketIO(addr, port, LoggingNamespace)
 
 
 
 import threading
 
-m = [0,0,0,0,0,0,0]
+m = [0,0,0,0]
 def USBErgService (  ):
 	running = True;
-	num_zeros = [0,0,0,0,0,0,0]
-	num_ones = [0,0,0,0,0,0,0]
-	prev_time = [0,0,0,0,0,0,0]
+	num_zeros = [0,0,0,0]
+	num_ones = [0,0,0,0]
+	prev_time = [0,0,0,0]
 	
 	ergs = searchErgs()
 	n_ergs = len(ergs)
@@ -75,6 +82,7 @@ def USBErgService (  ):
 			for i in range(n_ergs):
 				# m = pyrow.pyrow(ergs[i])
 				# print m.get_status()
+				print "ergData "+str(i)
 				ergInfo = m[i].get_erg()
 				data = m[i].get_monitor(forceplot=True)
 				data['cid'] = ergInfo['cid']
@@ -122,15 +130,16 @@ def USBErgService (  ):
 				# 	num_zeros[i] = 0
 
 
-				print "ergData "+str(i)
+				# print "ergData "+str(i)
 				socketIO.emit('ergData',data)
-				time.sleep(0.10)
+				time.sleep(0.005)
+				# time.sleep(0.10)
 
 			# ergs = pyrow.find()
 			# print len(list(ergys))
 			# ergs = list(ergs)
 			# number_ergs = len(ergs)
-			time.sleep(0.09)
+			# time.sleep(0.09)
 				# ergs = searchErgs()
 		
 		except Exception as e:
@@ -146,6 +155,8 @@ def USBErgService (  ):
 			# print m.get_status()
 			# ergInfo = m.get_erg()
 # while(1):
+
+#shoould be uncommented
 USBErgServiceT = threading.Thread(name='daemon', target=USBErgService)
 USBErgServiceT.start()
 USBErgServiceT.join()
