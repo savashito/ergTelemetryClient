@@ -6,7 +6,7 @@ import pyrow
 # Opens socket connection to communicate between Erg Telemetry and NODE
 addr = 'localhost'
 port = 8080
-print ("Waiting for incomming connections")
+print ("Waiting for incomming connections4444")
 
 
 # print ("Meow")
@@ -48,6 +48,7 @@ import threading
 
 m = [0,0,0,0]
 def USBErgService (  ):
+	print("USBErgService")
 	running = True;
 	num_zeros = [0,0,0,0]
 	num_ones = [0,0,0,0]
@@ -55,15 +56,23 @@ def USBErgService (  ):
 	
 	ergs = searchErgs()
 	n_ergs = len(ergs)
+	
 	# 0 recovery
 	# 1 drive 
 
 	state = 0
 	for i in range(len(ergs)):
 		m[i] = pyrow.pyrow(ergs[i])	
+		# m[i].dispose_resources()
+	# return
 	while(running):
-		ergs = pyrow.find()
-		ergs = list(ergs)
+		print("running")
+
+		# ergs = pyrow.find()
+		# ergs = list(ergs)
+#######
+
+#######
 		if n_ergs != len(ergs):
 			# new erg connection
 			running = False
@@ -83,13 +92,16 @@ def USBErgService (  ):
 				# m = pyrow.pyrow(ergs[i])
 				# print m.get_status()
 				print "ergData "+str(i)
+
 				ergInfo = m[i].get_erg()
 				data = m[i].get_monitor(forceplot=True)
+				# continue
 				data['cid'] = ergInfo['cid']
 				data['i'] = i
 				data['avgPower'] = data['power']
 				# print data
 				l = len(data['forceplot'])
+				# continue
 				# print l
 				# drive
 				if(state):
@@ -105,6 +117,8 @@ def USBErgService (  ):
 						# print "StrokeDataStart "+str(strokeData);
 						socketIO.emit('strokeData',strokeData)
 						state = 1 # drive
+				socketIO.emit('ergData',data)
+				continue
 				# print state
 
 				# if(0==len(data['forceplot'])):
@@ -131,8 +145,8 @@ def USBErgService (  ):
 
 
 				# print "ergData "+str(i)
-				socketIO.emit('ergData',data)
-				time.sleep(0.005)
+				# socketIO.emit('ergData',data)
+				# time.sleep(0.005)
 				# time.sleep(0.10)
 
 			# ergs = pyrow.find()
@@ -148,18 +162,22 @@ def USBErgService (  ):
 			# time.sleep(1)
 			print e
 			print "Search for ergs again"
-			return
+			for i in range(len(ergs)):
+				m[i] = pyrow.pyrow(ergs[i])	
+				m[i].dispose_resources()
+			USBErgService()
+			continue
 
 			# erg = searchErgs()[0]
 			# m = pyrow.pyrow(erg)
 			# print m.get_status()
 			# ergInfo = m.get_erg()
 # while(1):
-
+USBErgService()
 #shoould be uncommented
-USBErgServiceT = threading.Thread(name='daemon', target=USBErgService)
-USBErgServiceT.start()
-USBErgServiceT.join()
+# USBErgServiceT = threading.Thread(name='daemon', target=USBErgService)
+# USBErgServiceT.start()
+# USBErgServiceT.join()
 
 
 
